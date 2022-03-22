@@ -2,8 +2,8 @@ package com.example.currencyconvertus.data
 
 import retrofit2.http.GET
 
-interface CurrencyDAO {
+interface CurrencyAPI {
 
-    @GET("/")
+    @GET("/latest.js")
     suspend fun getLatestRates(): CurrencyResponse
 }

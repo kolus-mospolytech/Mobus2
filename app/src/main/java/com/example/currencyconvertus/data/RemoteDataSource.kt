@@ -7,18 +7,18 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class RemoteDataSource {
     companion object {
-        fun provideCurrencyDAO(): CurrencyDAO {
+        fun provideCurrencyDAO(): CurrencyAPI {
             val interceptor = HttpLoggingInterceptor()
             interceptor.level = HttpLoggingInterceptor.Level.BODY
             val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
 
             val retrofit = Retrofit.Builder()
                 .client(client)
-                .baseUrl("https://api.nokk3r.me/")
+                .baseUrl("https://www.cbr-xml-daily.ru/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
 
-            return retrofit.create(CurrencyDAO::class.java)
+            return retrofit.create(CurrencyAPI::class.java)
         }
     }
 

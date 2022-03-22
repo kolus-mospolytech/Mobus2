@@ -1,14 +1,10 @@
 package com.example.currencyconvertus.data
 
-import androidx.lifecycle.MediatorLiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.*
+import kotlinx.coroutines.launch
 
 class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel() {
-    val rates: MutableLiveData<CurrencyResponse> by lazy {
-        MediatorLiveData()
-    }
+    val rates: MutableLiveData<CurrencyResponse> = MediatorLiveData()
 
     /**
      * Launching a new coroutine to get the data in a non-blocking way
@@ -17,6 +13,12 @@ class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel(
     @Suppress("RedundantSuspendModifier")
     suspend fun getRates(): CurrencyResponse {
         return repository.getRates()
+    }
+
+    fun get() {
+        viewModelScope.launch {
+            rates.postValue(repository.getRates())
+        }
     }
 }
 
