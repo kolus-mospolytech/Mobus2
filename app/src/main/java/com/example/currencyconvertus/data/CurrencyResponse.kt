@@ -1,6 +1,6 @@
 package com.example.currencyconvertus.data
 
-data class OtvetAmogusa(
+data class CurrencyResponse(
     val success: Boolean,
     val timestamp: Long,
     val base: String,
