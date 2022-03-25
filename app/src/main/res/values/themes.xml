@@ -32,8 +32,8 @@
 
         <item name="android:statusBarColor">@android:color/transparent</item>
         <item name="android:windowLightStatusBar">true</item>
-        <item name="textAppearanceTitleLarge">@style/TextAppearance.CurrencyConvertus.TitleLarge</item>
-        <item name="textAppearanceTitleMedium">@style/TextAppearance.CurrencyConvertus.TitleMedium</item>
+<!--        <item name="textAppearanceTitleLarge">@style/TextAppearance.CurrencyConvertus.TitleLarge</item>-->
+<!--        <item name="textAppearanceTitleMedium">@style/TextAppearance.CurrencyConvertus.TitleMedium</item>-->
     </style>
 
     <style name="TextAppearance.CurrencyConvertus.TitleLarge" parent="TextAppearance.Material3.TitleLarge">

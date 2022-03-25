@@ -10,7 +10,10 @@ import com.example.currencyconvertus.data.CurrencyResponse
 import com.example.currencyconvertus.data.CurrencyViewModel
 import com.example.currencyconvertus.data.CurrencyViewModelFactory
 import com.example.currencyconvertus.databinding.ActivityMainBinding
+import com.example.currencyconvertus.misc.CurrencyHolder
 import com.example.currencyconvertus.ui.*
+import com.example.currencyconvertus.ui.exchange.CurrencyListFragment
+import com.example.currencyconvertus.ui.exchange.ExchangeFragment
 
 
 class MainActivity : AppCompatActivity() {
@@ -39,15 +42,18 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack("initialization fragment")
         transactionInitialization.commit()
 
+//        CurrencyListFragment().adapter.itemList = CurrencyHolder.createCurrencyList()
+//        CurrencyListFragment().adapter.notifyDataSetChanged()
+
         binding.bottomNavigation.selectedItemId = R.id.screen_exchange
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.screen_history -> {
-                    navigateTo(2)
-                }
                 R.id.screen_exchange -> {
                     navigateTo(0)
+                }
+                R.id.screen_history -> {
+                    navigateTo(2)
                 }
                 R.id.screen_analytics -> {
                     navigateTo(4)

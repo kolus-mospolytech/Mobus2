@@ -5,11 +5,6 @@
     <string name="screen_exchange">Обмен</string>
     <string name="screen_analytics">Аналитика</string>
 
-    <string name="search_text">search Text</string>
-    <string name="AppBar_title">Личности</string>
-
-    <string name="Name_example">Наполеон Бонапарт</string>
-    <string name="Dates_example">1769 – 1821</string>
-    <string name="Info_example">император французов (фр. Empereur des Français) в 1804—1814 и 1815 годах, полководец и государственный деятель</string>
-    <string name="Sex_example">Мужчина</string>
+    <string name="currency_code">USB</string>
+    <string name="base_currency">99.95 RUD</string>
 </resources>
