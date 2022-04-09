@@ -4,15 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
 
+    android:layout_marginVertical="@dimen/item_margin_2x"
+
     android:clickable="true"
     android:focusable="true"
     android:focusableInTouchMode="true"
-    android:longClickable="true"
-
-    android:paddingStart="@dimen/item_margin_2x"
-    android:paddingTop="@dimen/item_margin"
-    android:paddingEnd="@dimen/item_margin_2x"
-    android:paddingBottom="@dimen/item_margin">
+    android:longClickable="true">
 
     <CheckBox
         android:id="@+id/favorite"

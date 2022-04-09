@@ -42,9 +42,6 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack("initialization fragment")
         transactionInitialization.commit()
 
-//        CurrencyListFragment().adapter.itemList = CurrencyHolder.createCurrencyList()
-//        CurrencyListFragment().adapter.notifyDataSetChanged()
-
         binding.bottomNavigation.selectedItemId = R.id.screen_exchange
 
         binding.bottomNavigation.setOnItemSelectedListener { item ->

@@ -12,9 +12,11 @@ object CurrencyHolder {
         "BEBRA",
         "HAROSH",
         "PLOH",
+        "MEGAPLOH",
     )
 
     private val rate = arrayOf(
+        "100.07 VBUX",
         "100.07 VBUX",
         "100.07 VBUX",
         "100.07 VBUX",
@@ -38,11 +40,12 @@ object CurrencyHolder {
         false,
         false,
         false,
+        false,
     )
 
     fun createCurrencyList(): List<CurrencyListItem> {
         val currencyList = mutableListOf<CurrencyListItem>()
-        for (i in 0..9) {
+        for (i in 0..10) {
             val listItem = CurrencyListItem(
                 currency[i],
                 rate[i],

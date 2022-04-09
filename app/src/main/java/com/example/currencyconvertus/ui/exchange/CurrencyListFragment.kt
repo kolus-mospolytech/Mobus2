@@ -4,9 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import androidx.fragment.app.Fragment
+import com.example.currencyconvertus.R
 import com.example.currencyconvertus.databinding.FragmentCurrencyListBinding
 import com.example.currencyconvertus.misc.CurrencyHolder
 
@@ -33,5 +34,11 @@ class CurrencyListFragment : Fragment() {
         binding.recyclerView.layoutManager =
             LinearLayoutManager(activity, RecyclerView.VERTICAL, false)
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.addItemDecoration(
+            RecyclerViewItemDecoration(
+                this.requireContext(),
+                R.drawable.divider
+            )
+        )
     }
 }
