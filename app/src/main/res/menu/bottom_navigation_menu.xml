@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/screen_history"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_history_24"
+        android:title="@string/screen_history"/>
+    <item
+        android:id="@+id/screen_exchange"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_currency_exchange_24"
+        android:title="@string/screen_exchange"/>
+    <item
+        android:id="@+id/screen_analytics"
+        android:enabled="true"
+        android:icon="@drawable/ic_round_query_stats_24"
+        android:title="@string/screen_analytics"/>
+</menu>

@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">CurrencyConvertus</string>
+
+    <string name="screen_history">История</string>
+    <string name="screen_exchange">Обмен</string>
+    <string name="screen_analytics">Аналитика</string>
+
+    <string name="currency_code">USB</string>
+    <string name="base_currency">99.95 RUD</string>
 </resources>
