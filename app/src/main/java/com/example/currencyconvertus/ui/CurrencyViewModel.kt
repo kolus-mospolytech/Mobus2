@@ -1,6 +1,8 @@
-package com.example.currencyconvertus.data
+package com.example.currencyconvertus.ui
 
 import androidx.lifecycle.*
+import com.example.currencyconvertus.data_remote.CurrencyResponse
+import com.example.currencyconvertus.domain.repository.CurrencyRepository
 import kotlinx.coroutines.launch
 
 class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel() {
@@ -10,16 +12,16 @@ class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel(
      * Launching a new coroutine to get the data in a non-blocking way
      */
 
-    @Suppress("RedundantSuspendModifier")
-    suspend fun getRates(): CurrencyResponse {
-        return repository.getRates()
-    }
-
-    fun get() {
-        viewModelScope.launch {
-            rates.postValue(repository.getRates())
-        }
-    }
+//    @Suppress("RedundantSuspendModifier")
+//    suspend fun getRates(): CurrencyResponse {
+//        return repository.getRates()
+//    }
+//
+//    fun get() {
+//        viewModelScope.launch {
+//            rates.postValue(repository.getRates())
+//        }
+//    }
 }
 
 class CurrencyViewModelFactory(private val repository: CurrencyRepository) :

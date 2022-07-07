@@ -6,11 +6,10 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
-import com.example.currencyconvertus.data.CurrencyResponse
-import com.example.currencyconvertus.data.CurrencyViewModel
-import com.example.currencyconvertus.data.CurrencyViewModelFactory
+import com.example.currencyconvertus.data_remote.CurrencyResponse
+import com.example.currencyconvertus.ui.CurrencyViewModel
+import com.example.currencyconvertus.ui.CurrencyViewModelFactory
 import com.example.currencyconvertus.databinding.ActivityMainBinding
-import com.example.currencyconvertus.misc.CurrencyHolder
 import com.example.currencyconvertus.ui.*
 import com.example.currencyconvertus.ui.exchange.CurrencyListFragment
 import com.example.currencyconvertus.ui.exchange.ExchangeFragment
@@ -22,7 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val fragmentList: MutableList<Fragment> = mutableListOf()
     private var position = 0
     private val currencyViewModel: CurrencyViewModel by viewModels {
-        CurrencyViewModelFactory((application as CurrencyConvertus).repository)
+        CurrencyViewModelFactory(RepositoryDependency.repository)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,7 +64,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         currencyViewModel.rates.observe(this, ratesObserver)
-        currencyViewModel.get()
+//        currencyViewModel.get()
     }
 
     private fun navigateTo(to: Int) {
