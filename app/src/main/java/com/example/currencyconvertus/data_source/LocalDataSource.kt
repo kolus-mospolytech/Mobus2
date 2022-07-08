@@ -9,7 +9,7 @@ import java.util.*
 // Локальное хранилище данных (БД)
 class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
 
-    suspend fun getLocalRates(): List<CurrencyEntity>? {
+    suspend fun getLocalRates(): List<CurrencyEntity> {
         return currencyDatabase.currencyDao().getByDate(Date())
     }
 
@@ -17,7 +17,7 @@ class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
         return currencyDatabase.currencyDao().insertMany(currencyList)
     }
 
-    suspend fun udateRates(currencyList: List<CurrencyEntity>) {
+    suspend fun updateRates(currencyList: List<CurrencyEntity>) {
         return currencyDatabase.currencyDao().updateMany(currencyList)
     }
 
@@ -47,7 +47,7 @@ class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
         return currencyDatabase.historyDao().insert(historyEntity)
     }
 
-    suspend fun getHistoryEntries(startDate: Date, endDate: Date) {
+    suspend fun getHistoryEntries(startDate: Date, endDate: Date): List<HistoryEntity> {
         return currencyDatabase.historyDao().getBetweenDates(startDate, endDate)
     }
 }

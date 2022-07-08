@@ -1,6 +1,7 @@
 package com.example.currencyconvertus.domain.model
 
-import java.sql.Date
+import java.util.*
+
 
 data class Currency(
     val name: String,
