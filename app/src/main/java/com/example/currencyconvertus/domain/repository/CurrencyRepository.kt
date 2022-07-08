@@ -15,17 +15,17 @@ class CurrencyRepository(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun getCurrencies(): CurrenciesLocal? {
+    suspend fun getCurrencies(): CurrenciesLocal {
 //        try {
         val storedRates: List<CurrencyEntity> = localDataSource.getLocalRates()
-        val storedFavorites: List<FavoriteEntity>? = localDataSource.getFavorites()
+        val storedFavorites: List<FavoriteEntity> = localDataSource.getFavorites()
         val response: CurrencyResponse
         val newRates: List<CurrencyEntity>
         val domainRates: CurrenciesLocal
 
         if (storedRates.isNotEmpty()) {
             // проверка данных на "свежесть" (5 минут)
-            if (Date().time - storedRates.first().timestamp.time >= 300000) {
+            if (System.currentTimeMillis() - storedRates.first().timestamp.time >= 300000) {
                 response = remoteDataSource.getLatestRates()
                 newRates = CurrencyDtoMapper.mapResponseToDatabase(
                     response,
@@ -43,9 +43,6 @@ class CurrencyRepository(
             newRates = CurrencyDtoMapper.mapResponseToDatabase(response)
             domainRates = CurrencyDtoMapper.mapDatabaseToDomainModel(newRates, storedFavorites)
             localDataSource.addRates(newRates)
-            Log.d("MY_TAG1", "$response")
-            Log.d("MY_TAG2", "$newRates")
-            Log.d("MY_TAG3", "$domainRates")
         }
 
         return domainRates

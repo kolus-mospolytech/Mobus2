@@ -17,7 +17,7 @@ object CurrencyDtoMapper {
     ): List<CurrencyEntity> {
         val parsedRates: MutableList<CurrencyEntity> = mutableListOf()
 
-        val parsedTimestamp = Date()
+        val parsedTimestamp = Date(System.currentTimeMillis())
         val parsedDate = response.date
         val parsedBase = response.base
 

@@ -1,16 +1,22 @@
 package com.example.currencyconvertus.data_source
 
+import android.util.Log
 import com.example.currencyconvertus.data_local.CurrencyDatabase
 import com.example.currencyconvertus.data_local.entity.CurrencyEntity
 import com.example.currencyconvertus.data_local.entity.FavoriteEntity
 import com.example.currencyconvertus.data_local.entity.HistoryEntity
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.LocalDateTime
 import java.util.*
 
 // Локальное хранилище данных (БД)
 class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
 
     suspend fun getLocalRates(): List<CurrencyEntity> {
-        return currencyDatabase.currencyDao().getByDate(Date())
+        val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(LocalDateTime.now().toString()) as Date
+        Log.d("MY_TAG4", "$currentDate")
+        return currencyDatabase.currencyDao().getByDate(currentDate)
     }
 
     suspend fun addRates(currencyList: List<CurrencyEntity>) {
@@ -31,7 +37,7 @@ class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
         return currencyDatabase.currencyDao().deleteOld()
     }
 
-    suspend fun getFavorites(): List<FavoriteEntity>? {
+    suspend fun getFavorites(): List<FavoriteEntity> {
         return currencyDatabase.favoriteDao().getAll()
     }
 
