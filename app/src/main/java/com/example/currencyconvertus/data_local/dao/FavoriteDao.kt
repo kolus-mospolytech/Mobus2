@@ -16,4 +16,7 @@ interface FavoriteDao {
 
     @Query("SELECT * FROM favorite")
     suspend fun getAll(): List<FavoriteEntity>
+
+    @Query("SELECT * FROM favorite WHERE currency = (:name)")
+    suspend fun getByName(name: String): FavoriteEntity?
 }

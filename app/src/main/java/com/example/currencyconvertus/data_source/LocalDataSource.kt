@@ -41,6 +41,10 @@ class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
         return currencyDatabase.favoriteDao().getAll()
     }
 
+    suspend fun getFavoriteByName(name: String): FavoriteEntity? {
+        return currencyDatabase.favoriteDao().getByName(name)
+    }
+
     suspend fun addToFavorite(favoriteEntity: FavoriteEntity) {
         return currencyDatabase.favoriteDao().insert(favoriteEntity)
     }

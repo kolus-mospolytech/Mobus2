@@ -7,6 +7,7 @@ import com.example.currencyconvertus.data_remote.CurrencyResponse
 import com.example.currencyconvertus.domain.model.CurrenciesLocal
 import com.example.currencyconvertus.domain.model.Currency
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 object CurrencyDtoMapper {
@@ -18,7 +19,7 @@ object CurrencyDtoMapper {
         val parsedRates: MutableList<CurrencyEntity> = mutableListOf()
 
         val parsedTimestamp = Date(System.currentTimeMillis())
-        val parsedDate = response.date
+        val parsedDate = LocalDateTime.now().toString()
         val parsedBase = response.base
 
         if (storedRates != null) {

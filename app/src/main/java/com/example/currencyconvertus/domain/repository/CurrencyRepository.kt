@@ -50,6 +50,15 @@ class CurrencyRepository(
 //            return null
 //        }
     }
+
+    suspend fun toggleFavorite(name: String, favState: Boolean) {
+        if (favState) {
+            val favEntry = localDataSource.getFavoriteByName(name)
+            if (favEntry != null) {
+                localDataSource.deleteFromFavorite(favEntry)
+            }
+        } else localDataSource.addToFavorite(FavoriteEntity(0, name))
+    }
 }
 
 //class CurrencyRepository(private val currencyDAO: CurrencyApi) {

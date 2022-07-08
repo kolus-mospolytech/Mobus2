@@ -20,7 +20,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 
-@DelicateCoroutinesApi
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var rates: CurrencyResponse
@@ -31,7 +30,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         appContext = applicationContext
+
         currencyViewModel = RepositoryDependency.viewModel
+        currencyViewModel.init()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -64,11 +66,11 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        GlobalScope.launch(Dispatchers.IO) {
-            val currencies = RepositoryDependency.repository.getCurrencies()
-            Log.d("MY_TAG", "$currencies")
-            Log.d("MY_TAG is success", "${currencies?.rates}")
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val currencies = RepositoryDependency.repository.getCurrencies()
+//            Log.d("MY_TAG", "$currencies")
+//            Log.d("MY_TAG is success", "${currencies.rates}")
+//        }
 
 //        val ratesObserver = Observer<CurrencyResponse> { newRates ->
 //            rates = newRates
