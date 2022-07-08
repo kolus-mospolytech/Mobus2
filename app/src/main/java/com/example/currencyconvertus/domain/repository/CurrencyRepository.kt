@@ -1,5 +1,6 @@
 package com.example.currencyconvertus.domain.repository
 
+import android.util.Log
 import com.example.currencyconvertus.data_local.entity.CurrencyEntity
 import com.example.currencyconvertus.data_local.entity.FavoriteEntity
 import com.example.currencyconvertus.data_remote.CurrencyResponse
@@ -14,40 +15,49 @@ class CurrencyRepository(
     private val localDataSource: LocalDataSource,
     private val remoteDataSource: RemoteDataSource
 ) {
-    suspend fun getCurrencies(): CurrenciesLocal? {
-        try {
-            val storedRates: List<CurrencyEntity>? = localDataSource.getLocalRates()
-            val storedFavorites: List<FavoriteEntity>? = localDataSource.getFavorites()
-            val response: CurrencyResponse
-            val newRates: List<CurrencyEntity>
-            val domainRates: CurrenciesLocal
+    suspend fun getCurrencies(): CurrenciesLocal {
+//        try {
+        val storedRates: List<CurrencyEntity> = localDataSource.getLocalRates()
+        val storedFavorites: List<FavoriteEntity> = localDataSource.getFavorites()
+        val response: CurrencyResponse
+        val newRates: List<CurrencyEntity>
+        val domainRates: CurrenciesLocal
 
-            if (storedRates != null) {
-                // проверка данных на "свежесть" (5 минут)
-                if (Date().time - storedRates.first().timestamp.time >= 300000) {
-                    response = remoteDataSource.getLatestRates()
-                    newRates = CurrencyDtoMapper.mapResponseToDatabase(
-                        response,
-                        storedRates as MutableList<CurrencyEntity>
-                    )
-                    domainRates =
-                        CurrencyDtoMapper.mapDatabaseToDomainModel(newRates, storedFavorites)
-                    localDataSource.udateRates(newRates)
-                } else {
-                    domainRates =
-                        CurrencyDtoMapper.mapDatabaseToDomainModel(storedRates, storedFavorites)
-                }
-            } else {
+        if (storedRates.isNotEmpty()) {
+            // проверка данных на "свежесть" (5 минут)
+            if (System.currentTimeMillis() - storedRates.first().timestamp.time >= 300000) {
                 response = remoteDataSource.getLatestRates()
-                newRates = CurrencyDtoMapper.mapResponseToDatabase(response)
-                domainRates = CurrencyDtoMapper.mapDatabaseToDomainModel(newRates, storedFavorites)
-                localDataSource.udateRates(newRates)
+                newRates = CurrencyDtoMapper.mapResponseToDatabase(
+                    response,
+                    storedRates as MutableList<CurrencyEntity>
+                )
+                domainRates =
+                    CurrencyDtoMapper.mapDatabaseToDomainModel(newRates, storedFavorites)
+                localDataSource.updateRates(newRates)
+            } else {
+                domainRates =
+                    CurrencyDtoMapper.mapDatabaseToDomainModel(storedRates, storedFavorites)
             }
-
-            return domainRates
-        } catch (e: Exception) {
-            return null
+        } else {
+            response = remoteDataSource.getLatestRates()
+            newRates = CurrencyDtoMapper.mapResponseToDatabase(response)
+            domainRates = CurrencyDtoMapper.mapDatabaseToDomainModel(newRates, storedFavorites)
+            localDataSource.addRates(newRates)
         }
+
+        return domainRates
+//        } catch (e: Exception) {
+//            return null
+//        }
+    }
+
+    suspend fun toggleFavorite(name: String, favState: Boolean) {
+        if (favState) {
+            val favEntry = localDataSource.getFavoriteByName(name)
+            if (favEntry != null) {
+                localDataSource.deleteFromFavorite(favEntry)
+            }
+        } else localDataSource.addToFavorite(FavoriteEntity(0, name))
     }
 }
 

@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.currencyconvertus.databinding.CurrencyListItemBinding
-import com.example.currencyconvertus.misc.CurrencyListItem
+import com.example.currencyconvertus.ui.model.CurrencyUI
+import kotlin.reflect.KFunction1
 
-class CurrencyListAdapter(private val listItem: CurrencyListFragment) :
+class CurrencyListAdapter(private val setFavorite: KFunction1<String, Unit>,) :
     RecyclerView.Adapter<CurrencyListAdapter.Holder>() {
-    var itemList: List<CurrencyListItem> = listOf()
+    private var itemList: MutableList<CurrencyUI> = mutableListOf()
+    private var base: String = ""
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
         val binding =
@@ -18,7 +20,7 @@ class CurrencyListAdapter(private val listItem: CurrencyListFragment) :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val currentListItem = itemList[position]
-        holder.bind(currentListItem, listItem)
+        holder.bind(currentListItem, setFavorite)
     }
 
     override fun getItemCount(): Int {
@@ -28,12 +30,21 @@ class CurrencyListAdapter(private val listItem: CurrencyListFragment) :
     inner class Holder internal constructor(private val binding: CurrencyListItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
-            currentListItem: CurrencyListItem,
-            listItem: CurrencyListFragment
+            currentListItem: CurrencyUI,
+            favoriteToggle: KFunction1<String, Unit>
         ) = binding.run {
-            currency.text = currentListItem.currency
-            currencyRate.text = currentListItem.rate
+            currency.text = currentListItem.name
+            currencyRate.text = currentListItem.value + " " + base
             favorite.isChecked = currentListItem.favorite
+
+            favorite.setOnClickListener{
+                favoriteToggle(currentListItem.name)
+            }
         }
+    }
+
+    fun updateData(newItemList: MutableList<CurrencyUI>, newBase: String) {
+        itemList = newItemList
+        base = newBase
     }
 }

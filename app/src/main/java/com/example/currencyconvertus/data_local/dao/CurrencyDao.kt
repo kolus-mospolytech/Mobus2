@@ -2,7 +2,6 @@ package com.example.currencyconvertus.data_local.dao
 
 import androidx.room.*
 import com.example.currencyconvertus.data_local.entity.CurrencyEntity
-import kotlinx.coroutines.flow.Flow
 import java.util.*
 
 @Dao
@@ -32,5 +31,5 @@ interface CurrencyDao {
     suspend fun deleteOld()
 
     @Query("SELECT * FROM currency WHERE date = (:date) ORDER BY last_used_at DESC, name")
-    suspend fun getByDate(date: Date): List<CurrencyEntity>?
+    suspend fun getByDate(date: Date): List<CurrencyEntity>
 }

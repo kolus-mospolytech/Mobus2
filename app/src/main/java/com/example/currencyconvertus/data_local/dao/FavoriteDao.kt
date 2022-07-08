@@ -15,5 +15,8 @@ interface FavoriteDao {
     suspend fun delete(favoriteEntity: FavoriteEntity)
 
     @Query("SELECT * FROM favorite")
-    suspend fun getAll(): List<FavoriteEntity>?
+    suspend fun getAll(): List<FavoriteEntity>
+
+    @Query("SELECT * FROM favorite WHERE currency = (:name)")
+    suspend fun getByName(name: String): FavoriteEntity?
 }

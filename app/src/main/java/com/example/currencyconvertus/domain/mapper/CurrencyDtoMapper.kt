@@ -7,6 +7,7 @@ import com.example.currencyconvertus.data_remote.CurrencyResponse
 import com.example.currencyconvertus.domain.model.CurrenciesLocal
 import com.example.currencyconvertus.domain.model.Currency
 import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 object CurrencyDtoMapper {
@@ -17,8 +18,8 @@ object CurrencyDtoMapper {
     ): List<CurrencyEntity> {
         val parsedRates: MutableList<CurrencyEntity> = mutableListOf()
 
-        val parsedTimestamp = response.timestamp
-        val parsedDate = response.date
+        val parsedTimestamp = Date(System.currentTimeMillis())
+        val parsedDate = LocalDateTime.now().toString()
         val parsedBase = response.base
 
         if (storedRates != null) {
@@ -26,9 +27,9 @@ object CurrencyDtoMapper {
                 val storedCurrency = storedRates.firstOrNull { it.name == name }
 
                 if (storedCurrency != null) {
-                    storedCurrency.timestamp = java.sql.Date(parsedTimestamp)
+                    storedCurrency.timestamp = parsedTimestamp
                     storedCurrency.date =
-                        SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as java.sql.Date
+                        SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as Date
                     storedCurrency.base = parsedBase
                     storedCurrency.name = name
                     storedCurrency.value = value
@@ -36,8 +37,8 @@ object CurrencyDtoMapper {
                     storedRates.add(
                         CurrencyEntity(
                             id = 0,
-                            timestamp = java.sql.Date(parsedTimestamp),
-                            date = SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as java.sql.Date,
+                            timestamp = parsedTimestamp,
+                            date = SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as Date,
                             base = parsedBase,
                             name = name,
                             value = value
@@ -52,8 +53,8 @@ object CurrencyDtoMapper {
                 parsedRates.add(
                     CurrencyEntity(
                         id = 0,
-                        timestamp = java.sql.Date(parsedTimestamp),
-                        date = SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as java.sql.Date,
+                        timestamp = parsedTimestamp,
+                        date = SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as Date,
                         base = parsedBase,
                         name = name,
                         value = value
@@ -90,7 +91,7 @@ object CurrencyDtoMapper {
         return CurrenciesLocal(
             timestamp = rates.first().timestamp,
             base = rates.first().base,
-            date = SimpleDateFormat("yyyy-MM-dd").parse(rates.first().date.toString()) as Date,
+            date = rates.first().date,
             rates = parsedRates
         )
     }

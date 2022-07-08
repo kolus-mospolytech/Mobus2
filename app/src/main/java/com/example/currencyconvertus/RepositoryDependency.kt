@@ -6,6 +6,7 @@ import com.example.currencyconvertus.data_remote.CurrencyApi
 import com.example.currencyconvertus.data_source.LocalDataSource
 import com.example.currencyconvertus.data_source.RemoteDataSource
 import com.example.currencyconvertus.domain.repository.CurrencyRepository
+import com.example.currencyconvertus.ui.CurrencyViewModel
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -21,18 +22,22 @@ object RepositoryDependency {
 
     private val retrofit = Retrofit.Builder()
         .client(client)
-        .baseUrl("https://www.cbr-xml-daily.ru/")
+        .baseUrl("https://www.cbr-xml-daily.ru")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
 
     private val service = retrofit.create(CurrencyApi::class.java)
 
     //Подсос базы данных
+
+    private var appContext = MainActivity.appContext
+
     private val instance = Room.databaseBuilder(
-        CurrencyConvertus().applicationContext,
+        appContext,
         CurrencyDatabase::class.java,
         "exchange-db"
-    ).build()
+    ).allowMainThreadQueries()
+        .build()
 
 //    @Volatile
 //    private var INSTANCE: CurrencyDatabase? = null
@@ -59,4 +64,6 @@ object RepositoryDependency {
     private val remoteDataSource = RemoteDataSource(service)
 
     val repository = CurrencyRepository(localDataSource, remoteDataSource)
+
+    val viewModel = CurrencyViewModel(repository)
 }

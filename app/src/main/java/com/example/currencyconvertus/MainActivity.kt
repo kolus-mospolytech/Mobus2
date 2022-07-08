@@ -1,31 +1,39 @@
 package com.example.currencyconvertus
 
+import android.content.Context
 import android.os.Bundle
 import android.util.Log
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.example.currencyconvertus.data_remote.CurrencyResponse
-import com.example.currencyconvertus.ui.CurrencyViewModel
-import com.example.currencyconvertus.ui.CurrencyViewModelFactory
 import com.example.currencyconvertus.databinding.ActivityMainBinding
-import com.example.currencyconvertus.ui.*
+import com.example.currencyconvertus.ui.AnalyticsFragment
+import com.example.currencyconvertus.ui.CurrencyViewModel
+import com.example.currencyconvertus.ui.FilterFragment
+import com.example.currencyconvertus.ui.HistoryFagment
 import com.example.currencyconvertus.ui.exchange.CurrencyListFragment
 import com.example.currencyconvertus.ui.exchange.ExchangeFragment
-
+import kotlinx.coroutines.DelicateCoroutinesApi
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var rates: CurrencyResponse
     private val fragmentList: MutableList<Fragment> = mutableListOf()
     private var position = 0
-    private val currencyViewModel: CurrencyViewModel by viewModels {
-        CurrencyViewModelFactory(RepositoryDependency.repository)
-    }
+    private lateinit var currencyViewModel: CurrencyViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        appContext = applicationContext
+
+        currencyViewModel = RepositoryDependency.viewModel
+        currencyViewModel.init()
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -58,12 +66,18 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val ratesObserver = Observer<CurrencyResponse> { newRates ->
-            rates = newRates
-            Log.d("amoamoamo", rates.toString())
-        }
+//        GlobalScope.launch(Dispatchers.IO) {
+//            val currencies = RepositoryDependency.repository.getCurrencies()
+//            Log.d("MY_TAG", "$currencies")
+//            Log.d("MY_TAG is success", "${currencies.rates}")
+//        }
 
-        currencyViewModel.rates.observe(this, ratesObserver)
+//        val ratesObserver = Observer<CurrencyResponse> { newRates ->
+//            rates = newRates
+//            Log.d("amoamoamo", rates.toString())
+//        }
+
+//        currencyViewModel.rates.observe(this, ratesObserver)
 //        currencyViewModel.get()
     }
 
@@ -75,6 +89,10 @@ class MainActivity : AppCompatActivity() {
             .addToBackStack("swap fragment")
         transactionInitialization.commit()
         position = to
+    }
+
+    companion object {
+        lateinit var appContext: Context
     }
 }
 

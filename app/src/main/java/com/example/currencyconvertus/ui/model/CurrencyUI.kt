@@ -1,11 +1,10 @@
-package com.example.currencyconvertus.domain.model
+package com.example.currencyconvertus.ui.model
 
 import java.util.*
 
-
-data class Currency(
+data class CurrencyUI(
     val name: String,
-    val value: Double,
+    val value: String,
     var favorite: Boolean = false,
     var lastUse: Date? = null
 )
