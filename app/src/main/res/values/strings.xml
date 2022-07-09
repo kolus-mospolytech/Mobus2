@@ -18,4 +18,6 @@
 
     <string name="amount_helper">Сумма</string>
     <string name="exchange_button">Конвертировать</string>
+
+    <string name="history_date">12-12-12</string>
 </resources>

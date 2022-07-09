@@ -13,6 +13,7 @@ import com.example.currencyconvertus.R
 import com.example.currencyconvertus.RepositoryDependency
 import com.example.currencyconvertus.databinding.FragmentCurrencyListBinding
 import com.example.currencyconvertus.ui.CurrencyViewModel
+import com.example.currencyconvertus.ui.RecyclerViewItemDecoration
 import com.example.currencyconvertus.ui.model.CurrencyUI
 import com.example.currencyconvertus.ui.model.ExchangeUI
 

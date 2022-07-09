@@ -1,4 +1,4 @@
-package com.example.currencyconvertus.ui.exchange
+package com.example.currencyconvertus.ui
 
 import android.content.Context
 import android.graphics.Canvas
