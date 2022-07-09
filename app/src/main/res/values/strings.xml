@@ -7,4 +7,15 @@
 
     <string name="currency_code">USB</string>
     <string name="base_currency">99.95 RUD</string>
+
+    <string name="currency_1_helper">Из</string>
+    <string name="currency_1_placeholder">AMO</string>
+    <string name="currency_1_amount">1.00</string>
+
+    <string name="currency_2_helper">В</string>
+    <string name="currency_2_placeholder">GUS</string>
+    <string name="currency_2_amount">45.67</string>
+
+    <string name="amount_helper">Сумма</string>
+    <string name="exchange_button">Конвертировать</string>
 </resources>

@@ -12,7 +12,7 @@ import java.util.*
 data class HistoryEntity(
     @PrimaryKey(autoGenerate = true) @NotNull val id: Int,
     @TypeConverters(Converters::class)
-    @ColumnInfo(defaultValue = "CURRENT_TIMESTAMP") @NotNull val timestamp: Date,
+    @ColumnInfo(name = "timestamp") @NotNull val timestamp: Date,
 
     @ColumnInfo(name = "currency_1") @NotNull val currency1: String,
     @ColumnInfo(name = "rate_1") @NotNull val rate1: Double,

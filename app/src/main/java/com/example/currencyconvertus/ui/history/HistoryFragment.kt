@@ -1,21 +1,21 @@
-package com.example.currencyconvertus.ui
+package com.example.currencyconvertus.ui.history
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import com.example.currencyconvertus.databinding.FragmentFilterBinding
+import com.example.currencyconvertus.databinding.FragmentHistoryBinding
 
-class FilterFragment : Fragment() {
-    private lateinit var binding: FragmentFilterBinding
+class HistoryFragment : Fragment() {
+    private lateinit var binding: FragmentHistoryBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentFilterBinding.inflate(inflater, container, false)
+        binding = FragmentHistoryBinding.inflate(inflater, container, false)
         return binding.root
     }
 

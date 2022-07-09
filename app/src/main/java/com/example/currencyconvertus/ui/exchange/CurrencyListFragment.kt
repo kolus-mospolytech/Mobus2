@@ -8,15 +8,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.currencyconvertus.ActivityCallBack
 import com.example.currencyconvertus.R
 import com.example.currencyconvertus.RepositoryDependency
 import com.example.currencyconvertus.databinding.FragmentCurrencyListBinding
 import com.example.currencyconvertus.ui.CurrencyViewModel
+import com.example.currencyconvertus.ui.model.CurrencyUI
+import com.example.currencyconvertus.ui.model.ExchangeUI
 
 class CurrencyListFragment : Fragment() {
     private lateinit var binding: FragmentCurrencyListBinding
     private val viewModel: CurrencyViewModel = RepositoryDependency.viewModel
-    private var adapter: CurrencyListAdapter = CurrencyListAdapter(this::toggleFavorite,)
+    private var adapter: CurrencyListAdapter =
+        CurrencyListAdapter(this::toggleFavorite, this::openExchangeFragment)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -59,4 +63,19 @@ class CurrencyListFragment : Fragment() {
         viewModel.toggleFavorite(name, currency.favorite)
     }
 
+    private fun openExchangeFragment(currency: CurrencyUI) {
+        val favCurrency = viewModel.rates.value?.rates?.firstOrNull { it.name != currency.name && it.favorite }
+            ?: viewModel.rates.value?.rates?.firstOrNull { it.name == "RUB" } ?: return
+
+        viewModel.exchange.postValue(
+            ExchangeUI(
+                amount1 = 1.0,
+                currency1 = currency,
+                currency2 = favCurrency,
+            )
+        )
+
+        val activityCallBack = requireActivity() as ActivityCallBack
+        activityCallBack.navigateTo(1)
+    }
 }

@@ -14,7 +14,8 @@ import java.util.*
 class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
 
     suspend fun getLocalRates(): List<CurrencyEntity> {
-        val currentDate = SimpleDateFormat("yyyy-MM-dd").parse(LocalDateTime.now().toString()) as Date
+        val currentDate =
+            SimpleDateFormat("yyyy-MM-dd").parse(LocalDateTime.now().toString()) as Date
         Log.d("MY_TAG4", "$currentDate")
         return currencyDatabase.currencyDao().getByDate(currentDate)
     }
@@ -59,5 +60,9 @@ class LocalDataSource(private val currencyDatabase: CurrencyDatabase) {
 
     suspend fun getHistoryEntries(startDate: Date, endDate: Date): List<HistoryEntity> {
         return currencyDatabase.historyDao().getBetweenDates(startDate, endDate)
+    }
+
+    suspend fun getAllHistoryEntries(): List<HistoryEntity> {
+        return currencyDatabase.historyDao().getAll()
     }
 }

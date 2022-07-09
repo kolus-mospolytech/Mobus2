@@ -3,11 +3,14 @@ package com.example.currencyconvertus.domain.repository
 import android.util.Log
 import com.example.currencyconvertus.data_local.entity.CurrencyEntity
 import com.example.currencyconvertus.data_local.entity.FavoriteEntity
+import com.example.currencyconvertus.data_local.entity.HistoryEntity
 import com.example.currencyconvertus.data_remote.CurrencyResponse
 import com.example.currencyconvertus.data_source.LocalDataSource
 import com.example.currencyconvertus.data_source.RemoteDataSource
 import com.example.currencyconvertus.domain.mapper.CurrencyDtoMapper
+import com.example.currencyconvertus.domain.mapper.HistoryDtoMapper
 import com.example.currencyconvertus.domain.model.CurrenciesLocal
+import com.example.currencyconvertus.domain.model.HistoryLocal
 import java.util.*
 
 
@@ -49,6 +52,37 @@ class CurrencyRepository(
 //        } catch (e: Exception) {
 //            return null
 //        }
+    }
+
+    suspend fun getHistory(): HistoryLocal {
+        val storedHistory: List<HistoryEntity> = localDataSource.getAllHistoryEntries()
+
+        return HistoryDtoMapper.mapDatabaseToDomainModel(storedHistory)
+    }
+
+    suspend fun addHistoryEntry(
+        timestamp: Date,
+        currency1: String,
+        rate1: Double,
+        value1: Double,
+        currency2: String,
+        rate2: Double,
+        value2: Double,
+        base: String,
+    ) {
+        localDataSource.addToHistory(
+            HistoryEntity(
+                0,
+                timestamp,
+                currency1,
+                rate1,
+                value1,
+                currency2,
+                rate2,
+                value2,
+                base,
+            )
+        )
     }
 
     suspend fun toggleFavorite(name: String, favState: Boolean) {

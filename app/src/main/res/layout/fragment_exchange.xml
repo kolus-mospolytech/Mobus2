@@ -1,6 +1,106 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/block_exchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_margin_3x"
+        android:layout_marginEnd="@dimen/item_margin_3x"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.3">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/currency_1"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/layout_minimum"
+            android:hint="@string/currency_1_helper"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/currency_1_placeholder"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/value_1"
+            android:layout_width="@dimen/layout_minimum"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/item_margin_4x"
+            android:hint="@string/amount_helper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/currency_1"
+            app:layout_constraintTop_toTopOf="@id/currency_1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:text="@string/currency_1_amount" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/currency_2"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/layout_minimum"
+            android:layout_marginTop="@dimen/item_margin_2x"
+            android:hint="@string/currency_2_helper"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/currency_1">
+
+            <AutoCompleteTextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="none"
+                android:text="@string/currency_2_placeholder"
+                tools:ignore="LabelFor" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/value_2"
+            android:layout_width="@dimen/layout_minimum"
+            android:layout_height="wrap_content"
+            android:hint="@string/amount_helper"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/currency_2"
+            app:layout_constraintStart_toStartOf="@id/value_1"
+            app:layout_constraintTop_toTopOf="@id/currency_2">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="numberDecimal"
+                android:singleLine="true"
+                android:text="@string/currency_2_amount" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/applyExchange"
+        android:layout_width="@dimen/layout_minimum"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/item_margin_2x"
+        android:text="@string/exchange_button"
+        app:layout_constraintEnd_toEndOf="@id/block_exchange"
+        app:layout_constraintStart_toStartOf="@id/block_exchange"
+        app:layout_constraintTop_toBottomOf="@id/block_exchange" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

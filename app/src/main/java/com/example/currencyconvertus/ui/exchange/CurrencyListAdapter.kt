@@ -7,7 +7,10 @@ import com.example.currencyconvertus.databinding.CurrencyListItemBinding
 import com.example.currencyconvertus.ui.model.CurrencyUI
 import kotlin.reflect.KFunction1
 
-class CurrencyListAdapter(private val setFavorite: KFunction1<String, Unit>,) :
+class CurrencyListAdapter(
+    private val setFavorite: KFunction1<String, Unit>,
+    private val openExchangeFragment: KFunction1<CurrencyUI, Unit>
+) :
     RecyclerView.Adapter<CurrencyListAdapter.Holder>() {
     private var itemList: MutableList<CurrencyUI> = mutableListOf()
     private var base: String = ""
@@ -20,7 +23,7 @@ class CurrencyListAdapter(private val setFavorite: KFunction1<String, Unit>,) :
 
     override fun onBindViewHolder(holder: Holder, position: Int) {
         val currentListItem = itemList[position]
-        holder.bind(currentListItem, setFavorite)
+        holder.bind(currentListItem, setFavorite, openExchangeFragment)
     }
 
     override fun getItemCount(): Int {
@@ -31,14 +34,19 @@ class CurrencyListAdapter(private val setFavorite: KFunction1<String, Unit>,) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(
             currentListItem: CurrencyUI,
-            favoriteToggle: KFunction1<String, Unit>
+            favoriteToggle: KFunction1<String, Unit>,
+            exchangeFragment: KFunction1<CurrencyUI, Unit>,
         ) = binding.run {
             currency.text = currentListItem.name
             currencyRate.text = currentListItem.value + " " + base
             favorite.isChecked = currentListItem.favorite
 
-            favorite.setOnClickListener{
+            favorite.setOnClickListener {
                 favoriteToggle(currentListItem.name)
+            }
+
+            currencyItem.setOnClickListener {
+                exchangeFragment(currentListItem)
             }
         }
     }

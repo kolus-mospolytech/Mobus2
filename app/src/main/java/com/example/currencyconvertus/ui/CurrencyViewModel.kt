@@ -5,30 +5,32 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.currencyconvertus.domain.repository.CurrencyRepository
 import com.example.currencyconvertus.ui.mapper.CurrencyUIModelMapper
+import com.example.currencyconvertus.ui.mapper.HistoryUIModelMapper
 import com.example.currencyconvertus.ui.model.CurrenciesUIModel
-import com.example.currencyconvertus.ui.model.CurrencyUI
+import com.example.currencyconvertus.ui.model.ExchangeUI
+import com.example.currencyconvertus.ui.model.HistoryUIModel
 import kotlinx.coroutines.launch
 import java.util.*
 
 class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel() {
     val rates = MutableLiveData<CurrenciesUIModel>()
+    val exchange = MutableLiveData<ExchangeUI>()
+    val history = MutableLiveData<HistoryUIModel>()
 
     fun init() {
         viewModelScope.launch {
             repository.getCurrencies().let {
                 rates.postValue(CurrencyUIModelMapper.mapDomainModelToUIModel(it))
             }
-//            sortCurrencies()
+            repository.getHistory().let {
+                history.postValue(HistoryUIModelMapper.mapDomainModelToUIModel(it))
+            }
         }
     }
 
     fun toggleFavorite(name: String, favState: Boolean) {
         viewModelScope.launch {
             val newRates = rates.value
-//            val updatedRate = newRates?.rates?.firstOrNull { it.name == name }
-//            if (updatedRate != null) {
-//                updatedRate.favorite = !updatedRate.favorite
-//            }
             newRates?.rates?.firstOrNull { it.name == name }?.apply { favorite = !favorite }
             rates.postValue(newRates)
             sortCurrencies()
@@ -46,6 +48,30 @@ class CurrencyViewModel(private val repository: CurrencyRepository) : ViewModel(
                     { it.name })
             )
             rates.postValue(sortedCurrencies)
+        }
+    }
+
+    fun addHistoryEntry(
+        timestamp: Date,
+        currency1: String,
+        rate1: Double,
+        value1: Double,
+        currency2: String,
+        rate2: Double,
+        value2: Double,
+        base: String,
+    ) {
+        viewModelScope.launch {
+            repository.addHistoryEntry(
+                timestamp,
+                currency1,
+                rate1,
+                value1,
+                currency2,
+                rate2,
+                value2,
+                base,
+            )
         }
     }
 

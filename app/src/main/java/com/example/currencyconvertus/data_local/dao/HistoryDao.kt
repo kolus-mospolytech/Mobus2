@@ -17,4 +17,7 @@ interface HistoryDao {
 
     @Query("SELECT * FROM history WHERE timestamp BETWEEN (:startDate) AND (:endDate)")
     suspend fun getBetweenDates(startDate: Date, endDate: Date): List<HistoryEntity>
+
+    @Query("SELECT * FROM history")
+    suspend fun getAll(): List<HistoryEntity>
 }

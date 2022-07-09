@@ -37,6 +37,7 @@ object RepositoryDependency {
         CurrencyDatabase::class.java,
         "exchange-db"
     ).allowMainThreadQueries()
+        .fallbackToDestructiveMigration()
         .build()
 
 //    @Volatile

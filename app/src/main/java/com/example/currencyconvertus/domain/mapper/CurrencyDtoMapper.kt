@@ -3,9 +3,13 @@ package com.example.currencyconvertus.domain.mapper
 import android.annotation.SuppressLint
 import com.example.currencyconvertus.data_local.entity.CurrencyEntity
 import com.example.currencyconvertus.data_local.entity.FavoriteEntity
+import com.example.currencyconvertus.data_local.entity.HistoryEntity
 import com.example.currencyconvertus.data_remote.CurrencyResponse
 import com.example.currencyconvertus.domain.model.CurrenciesLocal
 import com.example.currencyconvertus.domain.model.Currency
+import com.example.currencyconvertus.domain.model.HistoryEntry
+import com.example.currencyconvertus.domain.model.HistoryLocal
+import com.example.currencyconvertus.ui.model.HistoryUIModel
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime
 import java.util.*
@@ -61,6 +65,17 @@ object CurrencyDtoMapper {
                     )
                 )
             }
+
+            parsedRates.add(
+                CurrencyEntity(
+                    id = 0,
+                    timestamp = parsedTimestamp,
+                    date = SimpleDateFormat("yyyy-MM-dd").parse(parsedDate) as Date,
+                    base = parsedBase,
+                    name = parsedBase,
+                    value = 1.0
+                )
+            )
 
             return parsedRates
         }

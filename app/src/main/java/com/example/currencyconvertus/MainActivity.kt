@@ -2,25 +2,18 @@ package com.example.currencyconvertus
 
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.currencyconvertus.data_remote.CurrencyResponse
 import com.example.currencyconvertus.databinding.ActivityMainBinding
-import com.example.currencyconvertus.ui.AnalyticsFragment
 import com.example.currencyconvertus.ui.CurrencyViewModel
-import com.example.currencyconvertus.ui.FilterFragment
-import com.example.currencyconvertus.ui.HistoryFagment
+import com.example.currencyconvertus.ui.analytics.AnalyticsFragment
 import com.example.currencyconvertus.ui.exchange.CurrencyListFragment
 import com.example.currencyconvertus.ui.exchange.ExchangeFragment
-import kotlinx.coroutines.DelicateCoroutinesApi
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.currencyconvertus.ui.history.FilterFragment
+import com.example.currencyconvertus.ui.history.HistoryFragment
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), ActivityCallBack {
     private lateinit var binding: ActivityMainBinding
     private lateinit var rates: CurrencyResponse
     private val fragmentList: MutableList<Fragment> = mutableListOf()
@@ -39,7 +32,7 @@ class MainActivity : AppCompatActivity() {
 
         fragmentList.add(CurrencyListFragment())
         fragmentList.add(ExchangeFragment())
-        fragmentList.add(HistoryFagment())
+        fragmentList.add(HistoryFragment())
         fragmentList.add(FilterFragment())
         fragmentList.add(AnalyticsFragment())
 
@@ -81,7 +74,7 @@ class MainActivity : AppCompatActivity() {
 //        currencyViewModel.get()
     }
 
-    private fun navigateTo(to: Int) {
+    override fun navigateTo(to: Int) {
         val transactionInitialization = supportFragmentManager
             .beginTransaction()
             .remove(fragmentList[position])
